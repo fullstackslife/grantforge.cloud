@@ -21,52 +21,38 @@ export default function WritePage() {
 
   const [generatedProposal, setGeneratedProposal] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
-    // TODO: Replace with actual OpenAI API call
-    // This is a mock response for now
-    setTimeout(() => {
-      setGeneratedProposal(`
-# ${formData.projectName} - Grant Proposal
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-## Project Description
-${formData.description}
+      if (!response.ok) {
+        throw new Error('Failed to generate proposal');
+      }
 
-## Funding Request
-We are seeking ${formData.fundingAmount} to support this initiative.
-
-## Target Audience
-${formData.targetAudience}
-
-## Expected Impact
-${formData.impact}
-
-## Implementation Plan
-1. Phase 1: Project Setup and Planning
-2. Phase 2: Core Development
-3. Phase 3: Testing and Refinement
-4. Phase 4: Launch and Scale
-
-## Budget Breakdown
-- Development: 40%
-- Marketing: 20%
-- Operations: 20%
-- Contingency: 20%
-
-## Timeline
-- Project Start: Q3 2025
-- MVP Launch: Q4 2025
-- Full Scale: Q1 2026
-      `);
+      const data = await response.json();
+      setGeneratedProposal(data.proposal || '');
+    } catch (err) {
+      console.error('Error generating proposal:', err);
+      setError(err instanceof Error ? err.message : 'Failed to generate proposal. Please try again.');
+    } finally {
       setIsLoading(false);
-    }, 2000);
+    }
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-8">AI Grant Writer</h1>
 
       <div className="grid md:grid-cols-2 gap-8">
@@ -155,6 +141,10 @@ ${formData.impact}
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
               <p className="mt-4 text-gray-600">Generating your proposal...</p>
+            </div>
+          ) : error ? (
+            <div className="text-red-600 p-4 bg-red-50 rounded-md">
+              {error}
             </div>
           ) : generatedProposal ? (
             <div className="prose max-w-none">
