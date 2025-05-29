@@ -1,60 +1,67 @@
 # GrantForge.cloud
 
-An AI-powered platform helping startups and businesses discover and win grants faster.
+An AI-powered platform that helps organizations discover and apply for grants using advanced language models.
 
-## Features
+## 🚀 Features
 
-- 🔍 Smart Grant Discovery
-- ✍️ AI Grant Writing Assistant
-- 📊 Application Tracking Dashboard
-- 📚 Learning Resources & Templates
+- **Grant Discovery**: Search and filter through a curated list of grants
+- **AI Grant Writer**: Generate professional grant proposals using GPT-4
+- **Application Tracking**: Monitor your grant applications and deadlines
+- **Smart Matching**: AI-powered matching of your organization to relevant grants
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- Next.js 14 (App Router)
+- Next.js 14
 - TypeScript
-- Tailwind CSS
+- TailwindCSS
 - OpenAI GPT-4
-- Supabase (Auth + Database)
+- Vercel Deployment
 
-## Getting Started
+## 🏗️ Getting Started
 
-1. Clone the repository
+1. Clone the repository:
+```bash
+git clone https://github.com/fullstackslife/grantforge.cloud.git
+cd grantforge.cloud
+```
+
 2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env.local` file with your environment variables:
-   ```
-   OPENAI_API_KEY=your_key_here
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
-   ```
+```bash
+npm install
+```
+
+3. Set up environment variables:
+Create a `.env.local` file with:
+```
+OPENAI_API_KEY=your_api_key_here
+```
+
 4. Run the development server:
-   ```bash
-   npm run dev
-   ```
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-## Project Structure
-
-```
-grantforge.cloud/
-├── app/                 # Next.js app router pages
-├── components/          # Reusable React components
-├── lib/                 # Utility functions and API clients
-├── public/             # Static assets
-└── styles/             # Global styles and Tailwind config
+```bash
+npm run dev
 ```
 
-## Contributing
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## 📝 Environment Variables
 
-## License
+Required environment variables:
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- `OPENAI_API_KEY`: Your OpenAI API key for GPT-4 access
+
+## 🚀 Deployment
+
+This project is configured for deployment on Vercel:
+
+1. Push to GitHub
+2. Import the repository in Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy!
+
+## 📄 License
+
+MIT License - see LICENSE file for details
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
