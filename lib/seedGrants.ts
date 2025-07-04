@@ -1,89 +1,72 @@
-export interface Grant {
-  id: string;
-  name: string;
-  description: string;
-  amount: string;
-  deadline: string;
-  requirements: string[];
-  link: string;
-  category: 'tech' | 'business' | 'social' | 'research';
-  region: 'global' | 'usa' | 'canada' | 'uk' | 'eu';
-}
+import { Grant } from './types';
 
-export const grants: Grant[] = [
+export const seedGrants: Grant[] = [
   {
-    id: 'verizon-resilience-2025',
+    id: '1',
     name: 'Verizon Disaster Resilience Prize 2025',
     description: 'Tech solutions enhancing U.S. disaster resilience. Total prize pool of $1,000,000, with $250,000 awarded to each of four innovative solutions.',
-    amount: '$250,000',
-    deadline: 'June 13, 2025',
+    amount: 250000,
+    region: 'USA',
+    industries: ['tech', 'social'],
+    deadline: '2025-06-13',
+    applicationUrl: 'https://solve.mit.edu/verizon-disaster-resilience-prize-2025',
+    provider: 'Verizon & MIT Solve',
     requirements: [
-      'Must be registered in contiguous U.S.',
+      'Registered in contiguous U.S.',
       'Minimum 4 full-time employees',
       'Technology-driven solution beyond prototype stage'
     ],
-    link: 'https://solve.mit.edu/verizon-disaster-resilience-prize-2025',
-    category: 'tech',
-    region: 'usa'
+    tags: ['disaster-resilience', 'emergency-response']
   },
   {
-    id: 'mit-solve-2025',
-    name: 'MIT Solve Global Challenges 2025',
-    description: 'Various challenges including Health, Learning, Economic Prosperity, and more. Focus on tech solutions with social impact.',
-    amount: '$10,000 - $100,000',
-    deadline: 'July 11, 2025',
+    id: '2',
+    name: 'Canada Digital Adoption Program (CDAP)',
+    description: 'Funding for businesses adopting digital tools and services. Includes grant and interest-free loan options.',
+    amount: 115000,
+    region: 'Canada',
+    industries: ['tech', 'business'],
+    deadline: '2024-12-31',
+    applicationUrl: 'https://ised-isde.canada.ca/site/canada-digital-adoption-program/en',
+    provider: 'Government of Canada',
     requirements: [
-      'Open to global applicants',
-      'Tech-based solution',
-      'Clear social impact'
+      'Canadian SME',
+      'Digital transformation project',
+      'Business plan'
     ],
-    link: 'https://solve.mit.edu/challenges',
-    category: 'tech',
-    region: 'global'
+    tags: ['digital-adoption', 'sme-support']
   },
   {
-    id: 'hello-tomorrow-2025',
-    name: 'Hello Tomorrow Global Challenge',
-    description: 'Deep tech solutions addressing global issues. Focus on science-backed innovations.',
-    amount: '€100,000',
-    deadline: 'Late 2025',
+    id: '3',
+    name: 'Innovate UK Smart Grants',
+    description: 'Support for R&D projects in digital technology, AI, and data platforms.',
+    amount: 500000,
+    region: 'UK',
+    industries: ['tech', 'research'],
+    deadline: '2025-06-26',
+    applicationUrl: 'https://www.ukri.org/opportunity/innovate-uk-smart-grants/',
+    provider: 'Innovate UK',
     requirements: [
-      'Deep tech focus',
-      'Science-backed innovation',
-      'Global impact potential'
+      'UK-based business',
+      'Innovative R&D project',
+      'Clear market potential'
     ],
-    link: 'https://hello-tomorrow.org/',
-    category: 'research',
-    region: 'global'
+    tags: ['innovation', 'rd-funding']
   },
   {
-    id: 'kiva-microloan',
-    name: 'Kiva U.S. Microloan Program',
-    description: '0% interest loans for small businesses and startups. Crowdfunded microloans.',
-    amount: 'Up to $15,000',
-    deadline: 'Rolling',
+    id: '4',
+    name: 'Tech Hubs and EDA Build to Scale Grants',
+    description: 'Regional innovation funding for SaaS platform scale-up and software for economic development.',
+    amount: 1000000,
+    region: 'USA',
+    industries: ['tech', 'business'],
+    deadline: '2025-03-15',
+    applicationUrl: 'https://www.eda.gov/funding/programs/',
+    provider: 'Economic Development Administration',
     requirements: [
-      'U.S. based',
-      'Credit check required',
-      'Business plan needed'
+      'U.S. based organization',
+      'Regional economic impact',
+      'Innovation focus'
     ],
-    link: 'https://www.kiva.org/',
-    category: 'business',
-    region: 'usa'
-  },
-  {
-    id: 'ifundwomen',
-    name: 'IFundWomen Universal Grant Application',
-    description: 'Grants for women-led businesses across various industries. Includes coaching and support.',
-    amount: 'Varies',
-    deadline: 'Rolling',
-    requirements: [
-      'Women-led business',
-      'Clear business plan',
-      'Growth potential'
-    ],
-    link: 'https://ifundwomen.com/',
-    category: 'business',
-    region: 'usa'
+    tags: ['regional-development', 'tech-hubs']
   }
 ]; 

@@ -1,12 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Grant } from '../../lib/seedGrants';
+import { Grant } from '@/lib/types';
 
 interface SavedGrant extends Grant {
   status: 'draft' | 'submitted' | 'awarded' | 'rejected';
   notes: string;
   savedAt: string;
+  industries: string[];
+  applicationUrl: string;
+  provider: string;
 }
 
 export default function DashboardPage() {
@@ -16,16 +19,17 @@ export default function DashboardPage() {
       id: 'verizon-resilience-2025',
       name: 'Verizon Disaster Resilience Prize 2025',
       description: 'Tech solutions enhancing U.S. disaster resilience.',
-      amount: '$250,000',
+      amount: 250000,
       deadline: 'June 13, 2025',
       requirements: [
         'Must be registered in contiguous U.S.',
         'Minimum 4 full-time employees',
         'Technology-driven solution beyond prototype stage'
       ],
-      link: 'https://solve.mit.edu/verizon-disaster-resilience-prize-2025',
-      category: 'tech',
       region: 'usa',
+      industries: ['tech', 'social'],
+      applicationUrl: 'https://solve.mit.edu/verizon-disaster-resilience-prize-2025',
+      provider: 'Verizon & MIT Solve',
       status: 'draft',
       notes: 'Need to complete team section',
       savedAt: '2025-05-29'
@@ -80,7 +84,6 @@ export default function DashboardPage() {
               <tr key={grant.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">{grant.name}</div>
-                  <div className="text-sm text-gray-500">{grant.category}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {grant.amount}
@@ -98,7 +101,7 @@ export default function DashboardPage() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <a
-                    href={grant.link}
+                    href={grant.applicationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:text-blue-900 mr-4"

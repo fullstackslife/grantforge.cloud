@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Grant } from '@/lib/types';
 import { formatCurrency } from '@/lib/utils';
 
@@ -6,34 +5,15 @@ interface GrantCardProps {
   grant: Grant;
 }
 
-export const GrantCard = ({ grant }: GrantCardProps) => {
-  const [saved, setSaved] = useState(false);
-  const amountDisplay = formatCurrency(grant.amount);
-
-  const handleSaveGrant = async () => {
-    if (typeof window !== 'undefined') {
-      const { userManager } = await import('@/lib/userManager');
-      const currentUser = userManager.getCurrentUser();
-      if (currentUser) {
-        userManager.saveGrant(currentUser.id, grant.id);
-        setSaved(true);
-      }
-    }
-  };
-
+export function GrantCard({ grant }: GrantCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="p-6">
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-xl font-semibold text-gray-900">{grant.name}</h3>
-          <div className="relative group">
-            <span className="px-3 py-1 text-sm font-medium rounded-full bg-blue-100 text-blue-800">
-              {amountDisplay}
-            </span>
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-              {grant.amount}
-            </div>
-          </div>
+          <span className="px-3 py-1 text-sm font-medium rounded-full bg-blue-100 text-blue-800">
+            {formatCurrency(grant.amount)}
+          </span>
         </div>
 
         <p className="text-gray-600 mb-4 line-clamp-3">{grant.description}</p>
@@ -90,7 +70,7 @@ export const GrantCard = ({ grant }: GrantCardProps) => {
           </div>
         </div>
 
-        <div className="mt-6 space-y-2">
+        <div className="mt-6">
           <a
             href={grant.applicationUrl}
             target="_blank"
@@ -99,19 +79,8 @@ export const GrantCard = ({ grant }: GrantCardProps) => {
           >
             Apply Now
           </a>
-          <button
-            onClick={handleSaveGrant}
-            disabled={saved}
-            className={`w-full px-4 py-2 font-medium rounded-md transition-colors duration-200 ${
-              saved
-                ? 'bg-green-100 text-green-800 cursor-not-allowed'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            {saved ? '✓ Saved' : 'Save Grant'}
-          </button>
         </div>
       </div>
     </div>
   );
-}; 
+} 

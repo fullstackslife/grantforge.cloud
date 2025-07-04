@@ -33,14 +33,34 @@ export default function Navigation() {
               Write
             </Link>
             <Link
-              href="/discover"
+              href="/grants"
               className={`px-3 py-2 rounded-md text-sm font-medium ${
-                isActive('/discover')
+                isActive('/grants')
                   ? 'bg-gray-100 text-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               Discover
+            </Link>
+            <Link
+              href="/pricing"
+              className={`px-3 py-2 rounded-md text-sm font-medium ${
+                isActive('/pricing')
+                  ? 'bg-gray-100 text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Pricing
+            </Link>
+            <Link
+              href="/account"
+              className={`px-3 py-2 rounded-md text-sm font-medium ${
+                isActive('/account')
+                  ? 'bg-gray-100 text-gray-900'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Account
             </Link>
           </div>
         </div>
