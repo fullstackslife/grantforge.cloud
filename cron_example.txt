@@ -1,0 +1,17 @@
+# Example cron job to fetch RSS feeds every hour
+# Add this to your crontab with: crontab -e
+
+# Fetch government opportunities every hour
+0 * * * * curl -X GET http://localhost:8000/api/rss/fetch
+
+# Alternative: Fetch every 30 minutes
+# */30 * * * * curl -X GET http://localhost:8000/api/rss/fetch
+
+# Alternative: Fetch every 6 hours
+# 0 */6 * * * curl -X GET http://localhost:8000/api/rss/fetch
+
+# To view your current crontab:
+# crontab -l
+
+# To remove all cron jobs:
+# crontab -r 
