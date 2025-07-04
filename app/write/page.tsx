@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePaywall } from '@/lib/usePaywall';
 
 interface FormData {
   projectName: string;
@@ -10,7 +11,14 @@ interface FormData {
   impact: string;
 }
 
+interface LeadFormData {
+  name: string;
+  email: string;
+  organizationName: string;
+}
+
 export default function WritePage() {
+  const { isSubscribed, setIsSubscribed } = usePaywall();
   const [formData, setFormData] = useState<FormData>({
     projectName: '',
     description: '',
@@ -19,12 +27,22 @@ export default function WritePage() {
     impact: ''
   });
 
-  const [generatedProposal, setGeneratedProposal] = useState<string>('');
+  const [leadFormData, setLeadFormData] = useState<LeadFormData>({
+    name: '',
+    email: '',
+    organizationName: ''
+  });
+
+  const [generatedProposal, setGeneratedProposal] = useState<string | { proposal: string; sections: any }>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isSubscribed) return;
+    
     setIsLoading(true);
     setError(null);
 
@@ -42,12 +60,70 @@ export default function WritePage() {
       }
 
       const data = await response.json();
-      setGeneratedProposal(data.proposal || '');
+      const proposalText = data.proposal || '';
+      setGeneratedProposal(proposalText);
+
+      // Save the proposal to user's account
+      if (typeof window !== 'undefined') {
+        const { userManager } = await import('@/lib/userManager');
+        const currentUser = userManager.getCurrentUser();
+        if (currentUser) {
+          userManager.saveProposal(currentUser.id, {
+            projectName: formData.projectName,
+            description: formData.description,
+            fundingAmount: formData.fundingAmount,
+            targetAudience: formData.targetAudience,
+            impact: formData.impact,
+            proposal: proposalText,
+          });
+        }
+      }
     } catch (err) {
       console.error('Error generating proposal:', err);
       setError(err instanceof Error ? err.message : 'Failed to generate proposal. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingLead(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(leadFormData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit lead');
+      }
+
+      // Create user account and set as subscribed
+      if (typeof window !== 'undefined') {
+        const { userManager } = await import('@/lib/userManager');
+        const newUser = userManager.createUser({
+          name: leadFormData.name,
+          email: leadFormData.email,
+          organization: leadFormData.organizationName,
+          plan: 'pro',
+        });
+        userManager.setCurrentUser(newUser.id);
+        setIsSubscribed(true);
+      }
+
+      setLeadSubmitted(true);
+      setLeadFormData({ name: '', email: '', organizationName: '' });
+    } catch (err) {
+      console.error('Error submitting lead:', err);
+      setError(err instanceof Error ? err.message : 'Failed to submit lead. Please try again.');
+    } finally {
+      setIsSubmittingLead(false);
     }
   };
 
@@ -126,12 +202,72 @@ export default function WritePage() {
 
             <button
               type="submit"
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-              disabled={isLoading}
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+              disabled={isLoading || !isSubscribed}
             >
               {isLoading ? 'Generating...' : 'Generate Proposal'}
             </button>
           </form>
+
+          {!isSubscribed && (
+            <div className="mt-8 border-t pt-8">
+              <h2 className="text-xl font-semibold mb-4">Request Early Access</h2>
+              {leadSubmitted ? (
+                <div className="text-green-600 bg-green-50 p-4 rounded-md">
+                  Thank you! We'll reach out soon to unlock your access.
+                </div>
+              ) : (
+                <form onSubmit={handleLeadSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 border rounded-md"
+                      value={leadFormData.name}
+                      onChange={(e) => setLeadFormData(prev => ({ ...prev, name: e.target.value }))}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      className="w-full px-4 py-2 border rounded-md"
+                      value={leadFormData.email}
+                      onChange={(e) => setLeadFormData(prev => ({ ...prev, email: e.target.value }))}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Organization Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 border rounded-md"
+                      value={leadFormData.organizationName}
+                      onChange={(e) => setLeadFormData(prev => ({ ...prev, organizationName: e.target.value }))}
+                      required
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-400"
+                    disabled={isSubmittingLead}
+                  >
+                    {isSubmittingLead ? 'Submitting...' : 'Request Access'}
+                  </button>
+                </form>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Preview Section */}
@@ -148,9 +284,9 @@ export default function WritePage() {
             </div>
           ) : generatedProposal ? (
             <div className="prose max-w-none">
-              <pre className="whitespace-pre-wrap">{generatedProposal}</pre>
+              <pre className="whitespace-pre-wrap">{typeof generatedProposal === 'string' ? generatedProposal : generatedProposal.proposal}</pre>
               <button
-                onClick={() => navigator.clipboard.writeText(generatedProposal)}
+                onClick={() => navigator.clipboard.writeText(typeof generatedProposal === 'string' ? generatedProposal : generatedProposal.proposal)}
                 className="mt-4 px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
               >
                 Copy to Clipboard
@@ -158,7 +294,9 @@ export default function WritePage() {
             </div>
           ) : (
             <div className="text-center py-8 text-gray-500">
-              Fill out the form and click "Generate Proposal" to create your grant proposal.
+              {isSubscribed 
+                ? 'Fill out the form and click "Generate Proposal" to create your grant proposal.'
+                : 'Request early access to start generating grant proposals.'}
             </div>
           )}
         </div>

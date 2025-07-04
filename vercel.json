@@ -1,0 +1,25 @@
+{
+  "redirects": [
+    { "source": "/discover", "destination": "/grants", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ],
+  "env": {
+    "AI_API_KEY": "@ai_api_key",
+    "BREVO_API_KEY": "@brevo_api_key",
+    "BREVO_TEMPLATE_ID": "@brevo_template_id",
+    "HUBSPOT_API_KEY": "@hubspot_api_key",
+    "PAYPAL_PAYMENT_LINK": "@paypal_payment_link",
+    "SUPABASE_URL": "@supabase_url",
+    "SUPABASE_KEY": "@supabase_key"
+  }
+} 

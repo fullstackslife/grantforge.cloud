@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: '/discover',
+        destination: '/grants',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig; 

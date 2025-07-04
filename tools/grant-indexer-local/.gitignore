@@ -1,0 +1,29 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Cursor files
+context.md
+*.cursor-cache
+*.cursor-history
+.cursor-tmp/
+
+# Virtualenv
+.venv/
+env/
+venv/
+
+# Local output
+data/*.json
+!data/.gitkeep
+
+# Logs, DBs, misc
+*.log
+*.tmp
+*.db
+*.sqlite3
+
+# OS junk
+.DS_Store
+Thumbs.db 

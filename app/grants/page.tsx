@@ -1,76 +1,60 @@
 'use client';
 
 import { useState } from 'react';
-import { grants, Grant } from '../../lib/seedGrants';
-import GrantCard from '../../components/GrantCard';
+import { GrantCard } from '@/components/GrantCard';
+import { GrantSearchForm } from '@/components/GrantSearchForm';
+import { seedGrants } from '@/lib/seedGrants';
+import { SearchFilters, Grant } from '@/lib/types';
+
 
 export default function GrantsPage() {
-  const [filters, setFilters] = useState({
-    category: '',
-    region: '',
-    search: ''
-  });
+  const [filteredGrants, setFilteredGrants] = useState(seedGrants);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const filteredGrants = grants.filter((grant: Grant) => {
-    const matchesCategory = !filters.category || grant.category === filters.category;
-    const matchesRegion = !filters.region || grant.region === filters.region;
-    const matchesSearch = !filters.search || 
-      grant.name.toLowerCase().includes(filters.search.toLowerCase()) ||
-      grant.description.toLowerCase().includes(filters.search.toLowerCase());
-
-    return matchesCategory && matchesRegion && matchesSearch;
-  });
+  const handleSearch = (filters: SearchFilters) => {
+    setIsLoading(true);
+    // Simulate API call delay
+    setTimeout(() => {
+      const filtered = seedGrants.filter((grant: Grant) => {
+        // Region filter
+        if (filters.region && grant.region !== filters.region) return false;
+        
+        // Industry filter
+        if (filters.industry && !grant.industries.includes(filters.industry)) return false;
+        
+        // Amount filter
+        if (filters.minAmount || filters.maxAmount) {
+          // If we have a min amount filter, check if grant's amount is less than filter
+          if (filters.minAmount && grant.amount < filters.minAmount) return false;
+          
+          // If we have a max amount filter, check if grant's amount is greater than filter
+          if (filters.maxAmount && grant.amount > filters.maxAmount) return false;
+        }
+        
+        return true;
+      });
+      setFilteredGrants(filtered);
+      setIsLoading(false);
+    }, 500);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Available Grants</h1>
-
-      {/* Filters */}
-      <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <input
-          type="text"
-          placeholder="Search grants..."
-          className="px-4 py-2 border rounded-md"
-          value={filters.search}
-          onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-        />
-
-        <select
-          className="px-4 py-2 border rounded-md"
-          value={filters.category}
-          onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
-        >
-          <option value="">All Categories</option>
-          <option value="tech">Technology</option>
-          <option value="business">Business</option>
-          <option value="social">Social Impact</option>
-          <option value="research">Research</option>
-        </select>
-
-        <select
-          className="px-4 py-2 border rounded-md"
-          value={filters.region}
-          onChange={(e) => setFilters(prev => ({ ...prev, region: e.target.value }))}
-        >
-          <option value="">All Regions</option>
-          <option value="global">Global</option>
-          <option value="usa">USA</option>
-          <option value="canada">Canada</option>
-          <option value="uk">UK</option>
-          <option value="eu">EU</option>
-        </select>
+      <h1 className="text-3xl font-bold mb-8">Grant Discovery</h1>
+      
+      <div className="mb-8">
+        <GrantSearchForm onSearch={handleSearch} />
       </div>
 
-      {/* Results */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredGrants.map((grant: Grant) => (
-          <GrantCard key={grant.id} grant={grant} />
-        ))}
-      </div>
-
-      {filteredGrants.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-600">No grants found matching your criteria.</p>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredGrants.map((grant: Grant) => (
+            <GrantCard key={grant.id} grant={grant} />
+          ))}
         </div>
       )}
     </div>
