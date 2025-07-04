@@ -102,6 +102,9 @@ export default function OpportunitiesPage() {
           </p>
         </div>
 
+        {/* Environment Check */}
+        <EnvironmentCheck />
+
         {/* Filter Controls */}
         <div className="mb-6 flex flex-wrap gap-4 items-center">
           <div className="flex items-center space-x-4">
