@@ -40,7 +40,7 @@ export default function OpportunitiesPage() {
         setOpportunities(result.data || [])
       }
     } catch (err) {
-      setError('Failed to fetch opportunities')
+      setError('Failed to fetch opportunities. Please check your Supabase configuration.')
       console.error('Fetch error:', err)
     } finally {
       setLoading(false)
