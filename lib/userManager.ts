@@ -182,9 +182,9 @@ class UserManager {
   // Initialize demo user for development
   initializeDemoUser(): User {
     const demoUser = this.createUser({
-      name: 'Brian Patrick Salvatore',
-      email: 'salvatore.brian@gmail.com',
-      organization: 'DevForge',
+      name: 'Demo User',
+      email: 'demo@example.com',
+      organization: 'Demo Organization',
       plan: 'pro',
     });
     
