@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import EnvironmentCheck from '../components/EnvironmentCheck'
 
 interface Opportunity {
   id: string
