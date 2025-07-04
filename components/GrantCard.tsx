@@ -189,6 +189,12 @@ export const GrantCard = ({ grant, viewMode = 'grid' }: GrantCardProps) => {
         </div>
 
         <div className="space-y-3">
+          <Link
+            href={`/grants/${grant.id}`}
+            className="block w-full text-center px-4 py-3 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition-colors duration-200"
+          >
+            View Details
+          </Link>
           <a
             href={grant.applicationUrl}
             target="_blank"
