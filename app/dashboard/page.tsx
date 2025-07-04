@@ -175,6 +175,26 @@ export default function DashboardPage() {
             </Link>
           </div>
 
+          {/* Saved Grants */}
+          <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+            <div className="flex items-center mb-4">
+              <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                <span className="text-xl">💾</span>
+              </div>
+              <h3 className="ml-3 text-lg font-semibold text-gray-900">Saved Grants</h3>
+            </div>
+            <p className="text-gray-600 mb-4">View and manage your saved grant opportunities.</p>
+            <Link
+              href="/saved"
+              className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            >
+              View Saved
+              <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+
           {/* Write Proposal */}
           <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
             <div className="flex items-center mb-4">
