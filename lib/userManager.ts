@@ -179,6 +179,15 @@ class UserManager {
     localStorage.setItem('grantforge_current_user', userId);
   }
 
+  // Clear all stored user data
+  clearAllData(): void {
+    if (typeof window === 'undefined') return;
+    localStorage.removeItem('grantforge_users');
+    localStorage.removeItem('grantforge_proposals');
+    localStorage.removeItem('grantforge_saved_grants');
+    localStorage.removeItem('grantforge_current_user');
+  }
+
   // Initialize demo user for development
   initializeDemoUser(): User {
     const demoUser = this.createUser({
