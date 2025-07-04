@@ -190,7 +190,7 @@ export const seedGrants: Grant[] = [
   },
   {
     id: '12',
-    name: 'Canada's Strategic Innovation Fund',
+    name: 'Canada\'s Strategic Innovation Fund',
     description: 'Large-scale funding for innovative projects that create jobs and economic growth.',
     amount: 5000000,
     region: 'Canada',
