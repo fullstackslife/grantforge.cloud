@@ -175,21 +175,23 @@ export default function GrantDetailPage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Requirements */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Requirements</h2>
-              <ul className="space-y-3">
-                {grant.requirements.map((requirement, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
-                      <svg className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <span className="text-gray-700">{requirement}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {grant.requirements && grant.requirements.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Requirements</h2>
+                <ul className="space-y-3">
+                  {grant.requirements.map((requirement, index) => (
+                    <li key={index} className="flex items-start">
+                      <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                        <svg className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <span className="text-gray-700">{requirement}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Industries */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
