@@ -26,7 +26,7 @@ export default function GrantDetailPage() {
         const currentUser = userManager.getCurrentUser();
         if (currentUser) {
           const savedGrants = userManager.getUserSavedGrants(currentUser.id);
-          setSaved(savedGrants.some(sg => sg.grantId === grantId));
+          setSaved(savedGrants.some((sg: any) => sg.grantId === grantId));
         }
       }
     } else {
