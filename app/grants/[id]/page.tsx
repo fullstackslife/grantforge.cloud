@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { seedGrants } from '@/lib/seedGrants';
 import { Grant } from '@/lib/types';
 import { formatCurrency } from '@/lib/utils';
+import { SavedGrant } from '@/lib/userManager';
 
 export default function GrantDetailPage() {
   const params = useParams();
