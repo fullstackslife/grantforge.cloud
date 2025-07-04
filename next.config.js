@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Ensure proper environment
-  env: {
-    NODE_ENV: process.env.NODE_ENV || 'production',
-  },
   async redirects() {
     return [
       {
