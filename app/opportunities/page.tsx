@@ -128,6 +128,16 @@ export default function OpportunitiesPage() {
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
             <p className="text-red-800">{error}</p>
+            {error.includes('Supabase') && (
+              <div className="mt-2 text-sm text-red-700">
+                <p>To fix this:</p>
+                <ol className="list-decimal list-inside mt-1 space-y-1">
+                  <li>Create a Supabase project at <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" className="underline">supabase.com</a></li>
+                  <li>Run the schema from <code className="bg-red-100 px-1 rounded">supabase/schema.sql</code></li>
+                  <li>Add your Supabase URL and keys to <code className="bg-red-100 px-1 rounded">.env.local</code></li>
+                </ol>
+              </div>
+            )}
           </div>
         )}
 
