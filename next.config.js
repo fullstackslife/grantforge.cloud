@@ -14,7 +14,7 @@ const nextConfig = {
   poweredByHeader: false,
   // Enable static optimization where possible
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true, // Disabled due to missing critters dependency
   },
 };
 
