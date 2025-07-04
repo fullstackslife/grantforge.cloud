@@ -10,11 +10,11 @@ export default function AccountPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize demo user if none exists
-    let currentUser = userManager.getCurrentUser();
-    if (!currentUser) {
-      currentUser = userManager.initializeDemoUser();
-    }
+    // Clear any existing user data to ensure fresh demo user
+    userManager.clearAllData();
+    
+    // Initialize demo user
+    const currentUser = userManager.initializeDemoUser();
     setUser(currentUser);
     setLoading(false);
   }, []);
