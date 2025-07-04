@@ -1,4 +1,8 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
   "redirects": [
     { "source": "/discover", "destination": "/grants", "permanent": true }
   ],
