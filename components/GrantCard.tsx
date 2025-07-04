@@ -29,7 +29,11 @@ export const GrantCard = ({ grant, viewMode = 'grid' }: GrantCardProps) => {
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-start justify-between mb-3">
-                <h3 className="text-xl font-semibold text-gray-900 pr-4">{grant.name}</h3>
+                <Link href={`/grants/${grant.id}`}>
+                  <h3 className="text-xl font-semibold text-gray-900 pr-4 hover:text-blue-600 transition-colors cursor-pointer">
+                    {grant.name}
+                  </h3>
+                </Link>
                 <div className="flex items-center space-x-2">
                   <span className="px-3 py-1 text-sm font-medium rounded-full bg-blue-100 text-blue-800">
                     {amountDisplay}
@@ -56,7 +60,11 @@ export const GrantCard = ({ grant, viewMode = 'grid' }: GrantCardProps) => {
                 </div>
               </div>
               
-              <p className="text-gray-600 mb-4 line-clamp-2">{grant.description}</p>
+              <Link href={`/grants/${grant.id}`}>
+                <p className="text-gray-600 mb-4 line-clamp-2 hover:text-gray-800 transition-colors cursor-pointer">
+                  {grant.description}
+                </p>
+              </Link>
               
               <div className="flex flex-wrap gap-2 mb-4">
                 {grant.industries.map((industry) => (
@@ -107,7 +115,11 @@ export const GrantCard = ({ grant, viewMode = 'grid' }: GrantCardProps) => {
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
       <div className="p-6">
         <div className="flex justify-between items-start mb-4">
-          <h3 className="text-xl font-semibold text-gray-900 pr-4">{grant.name}</h3>
+          <Link href={`/grants/${grant.id}`} className="flex-1">
+            <h3 className="text-xl font-semibold text-gray-900 pr-4 hover:text-blue-600 transition-colors cursor-pointer">
+              {grant.name}
+            </h3>
+          </Link>
           <div className="relative group">
             <span className="px-3 py-1 text-sm font-medium rounded-full bg-blue-100 text-blue-800">
               {amountDisplay}
@@ -118,7 +130,11 @@ export const GrantCard = ({ grant, viewMode = 'grid' }: GrantCardProps) => {
           </div>
         </div>
 
-        <p className="text-gray-600 mb-4 line-clamp-3">{grant.description}</p>
+        <Link href={`/grants/${grant.id}`}>
+          <p className="text-gray-600 mb-4 line-clamp-3 hover:text-gray-800 transition-colors cursor-pointer">
+            {grant.description}
+          </p>
+        </Link>
 
         <div className="flex flex-wrap gap-2 mb-4">
           {grant.industries.map((industry) => (
